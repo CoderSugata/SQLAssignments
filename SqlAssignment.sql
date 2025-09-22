@@ -106,15 +106,11 @@ Here’s why:
 
    * Example:
 
-     ```sql
+     
      emp_id INT PRIMARY KEY
-     ```
-
      is equivalent to
-
-     ```sql
      emp_id INT NOT NULL UNIQUE
-     ```
+     
 ---
 
  /* 4. Explain the steps and SQL commands used to add or remove constraints on an existing table. Provide an example for both adding and removing a constraint. */
@@ -131,10 +127,10 @@ You use `ALTER TABLE ... ADD CONSTRAINT` to add a new rule.
 
 ### Example: Add a unique constraint on the `email` column
 
-```sql
+
 ALTER TABLE employees
 ADD CONSTRAINT unique_email UNIQUE (email);
-```
+
 
 Here:
 
@@ -143,10 +139,10 @@ Here:
 
 ### Another example: Add a check constraint on salary
 
-```sql
+
 ALTER TABLE employees
 ADD CONSTRAINT check_salary CHECK (salary >= 30000);
-```
+
 
 ---
 
@@ -156,10 +152,9 @@ You use `ALTER TABLE ... DROP CONSTRAINT` (syntax depends a little on the databa
 
 ### Example: Remove the unique constraint from the `email` column
 
-```sql
+
 ALTER TABLE employees
 DROP CONSTRAINT unique_email;
-```
 
 Now the `email` column can have duplicates.
 
@@ -171,9 +166,9 @@ Now the `email` column can have duplicates.
 
   * To drop a unique constraint or primary key, you often need to know the **index name**. For example:
 
-    ```sql
+
     ALTER TABLE employees DROP INDEX unique_email;
-    ```
+
 * In **PostgreSQL / Oracle / SQL Server**, the syntax with `DROP CONSTRAINT` works directly.
 
 ---
@@ -255,22 +250,16 @@ Error messages vary by database system, but here are some common ones:
  
 ### **Step 1: Make `product_id` a Primary Key**
 
-```sql
+
 ALTER TABLE products
 ADD CONSTRAINT pk_product PRIMARY KEY (product_id);
-```
-
-* This ensures `product_id` is unique and not null.
-* I named the constraint `pk_product` 
 
 ---
 
 ### **Step 2: Add Default Value for `price`**
 
-```sql
 ALTER TABLE products
 ALTER COLUMN price SET DEFAULT 50.00;
-```
 
 * This sets the default price to `50.00` if none is provided during insert.
 
@@ -438,135 +427,92 @@ A foreign key is a column or a set of columns in one table that references the p
 
 **2. List all details of actors**
 
-```sql
 SELECT * FROM actor;
-```
 
 **3. List all customer information from DB**
 
-```sql
 SELECT * FROM customer;
-```
 
 **4. List different countries**
 
-```sql
 SELECT DISTINCT country FROM country;
-```
 
 **5 (S). Display all active customers**
 
-```sql
 SELECT * FROM customer WHERE active = 1;
-```
 
 **6. List rental IDs for customer with ID 1**
 
-```sql
 SELECT rental_id FROM rental WHERE customer_id = 1;
-```
 
 **7. Films whose rental duration > 5**
 
-```sql
 SELECT * FROM film WHERE rental_duration > 5;
-```
 
 **8. Count films with replacement cost > 15 and < 20**
 
-```sql
 SELECT COUNT(*) FROM film WHERE replacement_cost > 15 AND replacement_cost < 20;
-```
 
 **9. Count unique first names of actors**
 
-```sql
 SELECT COUNT(DISTINCT first_name) FROM actor;
-```
+
 
 **10. First 10 customer records**
 
-```sql
 SELECT * FROM customer LIMIT 10;
-```
 
 **11. First 3 customers whose first name starts with 'A'**
 
-```sql
 SELECT * FROM customer WHERE first_name LIKE 'A%' LIMIT 3;
-```
 
 **12. Names of first 5 movies rated 'R'**
 
-```sql
 SELECT title FROM film WHERE rating = 'R' LIMIT 5;
-```
 
 **13. Customers whose first name starts with 'A'**
 
-```sql
 SELECT * FROM customer WHERE first_name LIKE 'A%';
-```
 
 **14. Customers whose first name ends with 'a'**
 
-```sql
 SELECT * FROM customer WHERE first_name LIKE '%a';
-```
 
 **15. First 4 cities starting and ending with 'a'**
 
-```sql
 SELECT city FROM city WHERE city LIKE 'a%a' LIMIT 4;
-```
 
 **16. Customers whose first name has 'NI' anywhere**
 
-```sql
 SELECT * FROM customer WHERE first_name LIKE '%NI%';
-```
 
 **17. Customers with 'r' in 2nd position**
 
-```sql
 SELECT * FROM customer WHERE first_name LIKE '_r%';
-```
 
 **18. Customers whose name starts with 'a' and length ≥ 5**
 
-```sql
 SELECT * FROM customer WHERE first_name LIKE 'a%' AND LENGTH(first_name) >= 5;
-```
 
 **19. Customers whose name starts with 'a' and ends with 'o'**
 
-```sql
 SELECT * FROM customer WHERE first_name LIKE 'a%o';
-```
 
 **20. Films with rating PG or PG-13 (IN operator)**
 
-```sql
 SELECT * FROM film WHERE rating IN ('PG', 'PG-13');
-```
 
 **21. Films with length between 50 and 100**
 
-```sql
 SELECT * FROM film WHERE length BETWEEN 50 AND 100;
-```
 
 **22. Top 50 actors (LIMIT)**
 
-```sql
 SELECT * FROM actor LIMIT 50;
-```
 
 **23. Distinct film IDs from inventory**
 
-```sql
 SELECT DISTINCT film_id FROM inventory;
-```
 
 ---
 
@@ -579,65 +525,52 @@ Here you go — full questions with short SQL answers:
 **Question 1:**
 Retrieve the total number of rentals made in the Sakila database.
 
-```sql
 SELECT COUNT(*) AS total_rentals FROM rental;
-```
 
 ---
 
 **Question 2:**
 Find the average rental duration (in days) of movies rented from the Sakila database.
 
-```sql
 SELECT AVG(rental_duration) AS avg_duration FROM film;
-```
 
 ---
 
 **Question 3:**
 Display the first name and last name of customers in uppercase.
 
-```sql
 SELECT UPPER(first_name), UPPER(last_name) FROM customer;
-```
 
 ---
 
 **Question 4:**
 Extract the month from the rental date and display it alongside the rental ID.
 
-```sql
 SELECT rental_id, MONTH(rental_date) AS rental_month FROM rental;
-```
 
 ---
 
 **Question 5:**
 Retrieve the count of rentals for each customer (display customer ID and the count of rentals).
 
-```sql
 SELECT customer_id, COUNT(*) AS rental_count
 FROM rental
 GROUP BY customer_id;
-```
 
 ---
 
 **Question 6:**
 Find the total revenue generated by each store.
 
-```sql
 SELECT store_id, SUM(amount) AS total_revenue
 FROM payment
 GROUP BY store_id;
-```
 
 ---
 
 **Question 7:**
 Determine the total number of rentals for each category of movies.
 
-```sql
 SELECT c.name AS category, COUNT(r.rental_id) AS total_rentals
 FROM rental r
 JOIN inventory i ON r.inventory_id = i.inventory_id
@@ -645,19 +578,16 @@ JOIN film f ON i.film_id = f.film_id
 JOIN film_category fc ON f.film_id = fc.film_id
 JOIN category c ON fc.category_id = c.category_id
 GROUP BY c.name;
-```
 
 ---
 
 **Question 8:**
 Find the average rental rate of movies in each language.
 
-```sql
 SELECT l.name AS language, AVG(f.rental_rate) AS avg_rental_rate
 FROM film f
 JOIN language l ON f.language_id = l.language_id
 GROUP BY l.name;
-```
 
 ---
 
@@ -666,45 +596,38 @@ GROUP BY l.name;
 **Question 9:**
 Display the title of the movie, customer’s first name, and last name who rented it.
 
-```sql
 SELECT f.title, c.first_name, c.last_name
 FROM rental r
 JOIN inventory i ON r.inventory_id = i.inventory_id
 JOIN film f ON i.film_id = f.film_id
 JOIN customer c ON r.customer_id = c.customer_id;
-```
 
 ---
 
 **Question 10:**
 Retrieve the names of all actors who have appeared in the film "Gone with the Wind."
 
-```sql
 SELECT a.first_name, a.last_name
 FROM actor a
 JOIN film_actor fa ON a.actor_id = fa.actor_id
 JOIN film f ON fa.film_id = f.film_id
 WHERE f.title = 'Gone with the Wind';
-```
 
 ---
 
 **Question 11:**
 Retrieve the customer names along with the total amount they’ve spent on rentals.
 
-```sql
 SELECT c.first_name, c.last_name, SUM(p.amount) AS total_spent
 FROM customer c
 JOIN payment p ON c.customer_id = p.customer_id
 GROUP BY c.customer_id;
-```
 
 ---
 
 **Question 12:**
 List the titles of movies rented by each customer in a particular city (e.g., 'London').
 
-```sql
 SELECT c.first_name, c.last_name, f.title
 FROM customer c
 JOIN address a ON c.address_id = a.address_id
@@ -714,7 +637,6 @@ JOIN inventory i ON r.inventory_id = i.inventory_id
 JOIN film f ON i.film_id = f.film_id
 WHERE ci.city = 'London'
 GROUP BY c.customer_id, f.title;
-```
 
 ---
 
@@ -723,7 +645,6 @@ GROUP BY c.customer_id, f.title;
 **Question 13:**
 Display the top 5 rented movies along with the number of times they’ve been rented.
 
-```sql
 SELECT f.title, COUNT(r.rental_id) AS rental_count
 FROM rental r
 JOIN inventory i ON r.inventory_id = i.inventory_id
@@ -731,14 +652,12 @@ JOIN film f ON i.film_id = f.film_id
 GROUP BY f.film_id
 ORDER BY rental_count DESC
 LIMIT 5;
-```
 
 ---
 
 **Question 14:**
 Determine the customers who have rented movies from both stores (store ID 1 and store ID 2).
 
-```sql
 SELECT r.customer_id, c.first_name, c.last_name
 FROM rental r
 JOIN inventory i ON r.inventory_id = i.inventory_id
@@ -746,7 +665,6 @@ JOIN customer c ON r.customer_id = c.customer_id
 WHERE i.store_id IN (1, 2)
 GROUP BY r.customer_id
 HAVING COUNT(DISTINCT i.store_id) = 2;
-```
 
 ---
 
@@ -758,45 +676,38 @@ Here’s a concise set of SQL solutions for your questions, assuming the **Sakil
 
 /*1. Rank the customers based on the total amount they’ve spent on rentals */
 
-```sql
 SELECT c.customer_id, c.first_name, c.last_name,
        SUM(p.amount) AS total_spent,
        RANK() OVER (ORDER BY SUM(p.amount) DESC) AS rank
 FROM customer c
 JOIN payment p ON c.customer_id = p.customer_id
 GROUP BY c.customer_id;
-```
 
 ---
 
 /*2. Calculate the cumulative revenue generated by each film over time. */
 
-```sql
 SELECT f.film_id, f.title, r.rental_date, SUM(p.amount) 
        OVER (PARTITION BY f.film_id ORDER BY r.rental_date) AS cumulative_revenue
 FROM rental r
 JOIN inventory i ON r.inventory_id = i.inventory_id
 JOIN film f ON i.film_id = f.film_id
 JOIN payment p ON r.rental_id = p.rental_id;
-```
 
 ---
 
 /*3. Determine the average rental duration for each film. */
 
-```sql
 SELECT f.film_id, f.title, AVG(r.rental_duration) AS avg_rental_duration
 FROM rental r
 JOIN inventory i ON r.inventory_id = i.inventory_id
 JOIN film f ON i.film_id = f.film_id
 GROUP BY f.film_id;
-```
 
 ---
 
 /*4. Identify the top 3 films in each category based on rental counts. */
 
-```sql
 SELECT category_id, title, rental_count
 FROM (
     SELECT c.category_id, f.title, COUNT(r.rental_id) AS rental_count,
@@ -808,13 +719,11 @@ FROM (
     GROUP BY c.category_id, f.film_id
 ) AS sub
 WHERE rn <= 3;
-```
 
 ---
 
 /*5. Calculate the difference in rental counts between each customer’s total rentals and the average rentals across all customers. */
 
-```sql
 WITH customer_rentals AS (
     SELECT customer_id, COUNT(*) AS total_rentals
     FROM rental
@@ -825,25 +734,21 @@ WITH customer_rentals AS (
 SELECT cr.customer_id, cr.total_rentals, cr.total_rentals - ar.avg_rentals AS difference
 FROM customer_rentals cr
 CROSS JOIN avg_rentals ar;
-```
 
 ---
 
 /*6. Find the monthly revenue trend for the entire rental store */
 
-```sql
 SELECT DATE_FORMAT(r.rental_date, '%Y-%m') AS month, SUM(p.amount) AS monthly_revenue
 FROM rental r
 JOIN payment p ON r.rental_id = p.rental_id
 GROUP BY month
 ORDER BY month;
-```
 
 ---
 
 /* 7. Identify the customers whose total spending falls within the top 20% of all customers. */
 
-```sql
 SELECT customer_id, first_name, last_name, total_spent
 FROM (
     SELECT c.customer_id, c.first_name, c.last_name, SUM(p.amount) AS total_spent,
@@ -853,13 +758,11 @@ FROM (
     GROUP BY c.customer_id
 ) AS ranked
 WHERE percentile_rank = 1;
-```
 
 ---
 
 /* 8. Calculate the running total of rentals per category, ordered by rental count. */
 
-```sql
 SELECT category_id, title, COUNT(r.rental_id) AS rentals,
        SUM(COUNT(r.rental_id)) OVER (PARTITION BY category_id ORDER BY COUNT(r.rental_id)) AS running_total
 FROM film f
@@ -867,13 +770,11 @@ JOIN film_category c ON f.film_id = c.film_id
 JOIN inventory i ON f.film_id = i.film_id
 JOIN rental r ON i.inventory_id = r.inventory_id
 GROUP BY category_id, title;
-```
 
 ---
 
 /*9. Find the films rented less than the average rental count for their respective categories. */
 
-```sql
 WITH category_avg AS (
     SELECT c.category_id, AVG(rental_count) AS avg_rentals
     FROM (
@@ -893,14 +794,12 @@ JOIN inventory i ON f.film_id = i.film_id
 JOIN rental r ON i.inventory_id = r.inventory_id
 GROUP BY f.film_id, c.category_id
 HAVING COUNT(r.rental_id) < (SELECT avg_rentals FROM category_avg WHERE category_id = c.category_id);
-```
 
 ---
 
 /* 10.Identify the top 5 months with the highest revenue and display the revenue generated in each month */
 
-```sql
-SELECT month, monthly_revenue
+	SELECT month, monthly_revenue
 FROM (
     SELECT DATE_FORMAT(r.rental_date, '%Y-%m') AS month, SUM(p.amount) AS monthly_revenue
     FROM rental r
@@ -909,7 +808,6 @@ FROM (
 ) AS monthly
 ORDER BY monthly_revenue DESC
 LIMIT 5;
-```
 
 ---
 
@@ -1038,7 +936,6 @@ actor_id | first_name | last_name
 ### **5. CTE Basics**
 **Question:** Write a query using a CTE to retrieve the distinct list of actor names and the number of films they have acted in.
 
-```sql
 WITH actor_films AS (
     SELECT a.actor_id, a.first_name, a.last_name, COUNT(fa.film_id) AS film_count
     FROM actor a
@@ -1048,16 +945,10 @@ WITH actor_films AS (
 SELECT first_name, last_name, film_count
 FROM actor_films
 ORDER BY film_count DESC;
-```
-
-Here’s a concise set of SQL answers using CTEs for the Sakila database:
-
----
 
 **Question 5: CTE Basics**
 Retrieve the distinct list of actor names and the number of films they have acted in:
 
-```sql
 WITH actor_films AS (
     SELECT a.actor_id, a.first_name, a.last_name, COUNT(fa.film_id) AS film_count
     FROM actor a
@@ -1067,13 +958,11 @@ WITH actor_films AS (
 SELECT first_name, last_name, film_count
 FROM actor_films
 ORDER BY film_count DESC;
-```
 ---
 
 **Question 6: CTE with Joins**
 Combine `film` and `language` to display film title, language name, and rental rate:
 
-```sql
 WITH film_info AS (
     SELECT f.film_id, f.title, l.name AS language, f.rental_rate
     FROM film f
@@ -1081,13 +970,11 @@ WITH film_info AS (
 )
 SELECT title, language, rental_rate
 FROM film_info;
-```
 ---
 
 **Question 7: CTE for Aggregation**
 Find total revenue per customer (sum of payments):
 
-```sql
 WITH customer_revenue AS (
     SELECT customer_id, SUM(amount) AS total_spent
     FROM payment
@@ -1097,14 +984,12 @@ SELECT c.first_name, c.last_name, cr.total_spent
 FROM customer c
 JOIN customer_revenue cr ON c.customer_id = cr.customer_id
 ORDER BY cr.total_spent DESC;
-```
 
 ---
 
 **Question 8: CTE with Window Functions**
 Rank films based on rental duration:
 
-```sql
 WITH film_rank AS (
     SELECT film_id, title, rental_duration,
            RANK() OVER (ORDER BY rental_duration DESC) AS rank
@@ -1113,14 +998,12 @@ WITH film_rank AS (
 SELECT title, rental_duration, rank
 FROM film_rank
 ORDER BY rank;
-```
 
 ---
 
 **Question 9: CTE and Filtering**
 List customers with more than 2 rentals, then join with customer table:
 
-```sql
 WITH frequent_customers AS (
     SELECT customer_id, COUNT(*) AS rental_count
     FROM rental
@@ -1130,7 +1013,6 @@ WITH frequent_customers AS (
 SELECT c.customer_id, c.first_name, c.last_name, fc.rental_count
 FROM frequent_customers fc
 JOIN customer c ON fc.customer_id = c.customer_id;
-```
 
 Here’s a concise set of SQL solutions for your CTE questions in the Sakila database:
 
@@ -1139,7 +1021,6 @@ Here’s a concise set of SQL solutions for your CTE questions in the Sakila dat
 **Question 10: CTE for Date Calculations**
 Find the total number of rentals made each month:
 
-```sql
 WITH monthly_rentals AS (
     SELECT DATE_FORMAT(rental_date, '%Y-%m') AS rental_month,
            COUNT(*) AS total_rentals
@@ -1149,14 +1030,12 @@ WITH monthly_rentals AS (
 SELECT rental_month, total_rentals
 FROM monthly_rentals
 ORDER BY rental_month;
-```
 
 ---
 
 **Question 11: CTE and Self-Join**
 Generate pairs of actors who appeared in the same film:
 
-```sql
 WITH actor_pairs AS (
     SELECT fa1.film_id, fa1.actor_id AS actor1_id, fa2.actor_id AS actor2_id
     FROM film_actor fa1
@@ -1170,14 +1049,12 @@ FROM actor_pairs ap
 JOIN actor a1 ON ap.actor1_id = a1.actor_id
 JOIN actor a2 ON ap.actor2_id = a2.actor_id
 ORDER BY ap.film_id;
-```
 
 ---
 
 **Question 12: CTE for Recursive Search**
 Find all employees who report (directly or indirectly) to a specific manager:
 
-```sql
 WITH RECURSIVE employee_hierarchy AS (
     SELECT staff_id, first_name, last_name, reports_to
     FROM staff
@@ -1189,7 +1066,6 @@ WITH RECURSIVE employee_hierarchy AS (
 )
 SELECT staff_id, first_name, last_name, reports_to
 FROM employee_hierarchy;
-```
 
 
 
